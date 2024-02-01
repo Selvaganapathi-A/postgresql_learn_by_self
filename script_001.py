@@ -41,6 +41,9 @@ def main():
                     {
                         "b_data": 't',
                     },
+                    {
+                        "b_data": "on",
+                    },
                     # ~ False
                     {
                         "b_data": 'no',
@@ -53,6 +56,9 @@ def main():
                     },
                     {
                         "b_data": False,
+                    },
+                    {
+                        "b_data": "off",
                     },
                 ))
             cursor.execute("select * from demo_boolean_data_type;")
