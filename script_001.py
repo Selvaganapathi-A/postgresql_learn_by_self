@@ -10,23 +10,56 @@ def main():
         print("Connection Info", connection.adapters)
         with connection.cursor() as cursor:
             # * Boolean Datatype = True
+
+            # create table
             cursor.execute(
-                "select CAST(1 as BOOLEAN), CAST('yes' as BOOLEAN), CAST('y' as BOOLEAN), CAST('true' as BOOLEAN), CAST('t' as BOOLEAN), true;"
+                ("create temp table if not exists demo_boolean_data_type("
+                 "pk serial primary key,"
+                 "dt_boolean boolean"
+                 ");"))
+            # insert data
+            query = (
+                "insert into demo_boolean_data_type(dt_boolean) values (%(b_data)s);"
             )
+            print(query)
+            cursor.executemany(
+                query,
+                (
+                    # ~ True
+                    {
+                        "b_data": True,
+                    },
+                    {
+                        "b_data": 'yes',
+                    },
+                    {
+                        "b_data": 'y',
+                    },
+                    {
+                        "b_data": 'true',
+                    },
+                    {
+                        "b_data": 't',
+                    },
+                    # ~ False
+                    {
+                        "b_data": 'no',
+                    },
+                    {
+                        "b_data": 'false',
+                    },
+                    {
+                        "b_data": 'f',
+                    },
+                    {
+                        "b_data": False,
+                    },
+                ))
+            cursor.execute("select * from demo_boolean_data_type;")
             #
             result = cursor.fetchall()
-            print(result)
-            #
-            #
-            #
-            #
-            # * Boolean Datatype = False
-            cursor.execute(
-                "select CAST(0 as BOOLEAN), CAST('no' as BOOLEAN), CAST('false' as BOOLEAN), CAST('f' as BOOLEAN), false;"
-            )
-            #
-            result = cursor.fetchall()
-            print(result)
+            for (pk, x) in result:
+                print(pk, x)
             #
         connection.commit()
         connection.close()
