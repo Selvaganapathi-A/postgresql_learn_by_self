@@ -17,25 +17,31 @@ def main():
             # create table
             cursor.execute(
                 ("create temp table if not exists demo_charcter_data_type("
-                 "dt_char char(32),"
-                 "dt_varchar varchar(48),"
-                 "dt_text text,"
-                 "dt_varchar_ul text"
+                 "a char(64), "
+                 "b varchar(48), "
+                 "c varchar, "
+                 "d text, "
+                 "e bpchar(64),"
+                 "f bpchar"
                  ");"))
             # insert data
             cursor.execute(
-                "insert into demo_charcter_data_type values (%s, %s, %s, %s);",
+                "insert into demo_charcter_data_type values (%s, %s, %s, %s, %s, %s);",
                 ((
                     "char data type(32)",
                     "varchar data type(48) ------",
                     "text data type",
+                    "varchar_umlimited length",
+                    "varchar_umlimited length",
                     "varchar_umlimited length",
                 )))
             cursor.execute("select * from demo_charcter_data_type;")
             #
             results = cursor.fetchall()
             for result in results:
-                print(result)
+                for x in result:
+                    print(f"{x!r}")
+                print()
             print()
             #
             cursor.execute("drop table if exists demo_charcter_data_type;")
